@@ -47,12 +47,17 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCL
     <param name="local_costmap/height" value="10.0"/>
 
     <!-- static global costmap, static map provides size -->
-    <rosparam file="$(find husky_navigation)/config/costmap_global_static.yaml" command="load" ns="global_costmap" unless="$(arg no_static_map)"/>
-    
+    <!-- <rosparam file="$(find husky_navigation)/config/costmap_global_static.yaml" command="load" ns="global_costmap" unless="$(arg no_static_map)"/> -->
     <!-- global costmap with laser, for odom_navigation_demo -->
     <rosparam file="$(find husky_navigation)/config/costmap_global_laser.yaml" command="load" ns="global_costmap" if="$(arg no_static_map)"/>
     <param name="global_costmap/width" value="100.0" if="$(arg no_static_map)"/>
     <param name="global_costmap/height" value="100.0" if="$(arg no_static_map)"/>
+    <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+    <param name="controller_frequency" value="3.0" />
   </node>
-
+  <node name="standalone_converter" pkg="costmap_converter" type="standalone_converter" output="screen">
+    <param name="converter_plugin" value="costmap_converter::CostmapToDynamicObstacles" />
+    <param name="costmap_topic" value="/move_base/local_costmap/costmap" />
+    <param name="odom_topic" value="/odom" />
+  </node>
 </launch>

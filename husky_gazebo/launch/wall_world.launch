@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="laser_enabled" default="true"/>
+  <arg name="realsense_enabled" default="false"/>
+
+  <!-- <include file="$(find husky_gazebo)/launch/playpen.launch" /> -->
+
+  <include file="$(find husky_gazebo)/launch/spawn_husky.launch">
+    <arg name="laser_enabled" value="$(arg laser_enabled)"/>
+    <arg name="realsense_enabled" value="$(arg realsense_enabled)"/>
+  </include>
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find husky_gazebo)/worlds/wall.world"/>
+    <!-- <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/> -->
+  </include>
+
+</launch>
+
